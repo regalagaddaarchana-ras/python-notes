@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python Notes — Complete Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0E1A2B; --navy-2:#16263D; --ink:#1B2433; --muted:#5B6678;
+  --bg:#F5F6F8; --card:#FFFFFF; --line:#E1E5EB; --brass:#B38A3E; --brass-soft:#F3EBDA;
+  --code-bg:#0E1A2B; --code-fg:#DCE3EE; --k:#E0B565; --s:#8FD3B0; --c:#7C8BA3; --n:#9FC2F2; --f:#F0A9A0;
+  --serif:'Source Serif 4',Georgia,serif; --sans:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0A121E;--card:#111E31;--ink:#E6EBF3;--muted:#98A4B8;--line:#22314A;--brass-soft:#2A2517;--code-bg:#08101B}
+}
+:root[data-theme="dark"]{--bg:#0A121E;--card:#111E31;--ink:#E6EBF3;--muted:#98A4B8;--line:#22314A;--brass-soft:#2A2517;--code-bg:#08101B}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+.layout{display:grid;grid-template-columns:288px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--navy);color:#C9D2E0;padding:28px 20px;display:flex;flex-direction:column;gap:18px}
+.brand{font-family:var(--serif);font-size:24px;color:#fff;font-weight:600;line-height:1.2}
+.brand small{display:block;font:400 13px var(--sans);color:#8C9AB0;margin-top:4px}
+.brand::after{content:"";display:block;width:44px;height:3px;background:var(--brass);margin-top:14px}
+#q{width:100%;padding:10px 12px;border-radius:6px;border:1px solid #2A3B57;background:var(--navy-2);color:#fff;font:14px var(--sans)}
+#q::placeholder{color:#7F8DA4}
+nav a{display:block;padding:8px 12px;margin:2px 0;border-left:3px solid transparent;color:#B7C2D3;text-decoration:none;font-size:14.5px;border-radius:0 6px 6px 0}
+nav a:hover{background:var(--navy-2);color:#fff}
+nav a.active{border-left-color:var(--brass);background:var(--navy-2);color:#fff;font-weight:500}
+.theme{margin-top:auto;background:none;border:1px solid #2A3B57;color:#B7C2D3;padding:9px;border-radius:6px;cursor:pointer;font:14px var(--sans)}
+.theme:hover{border-color:var(--brass);color:#fff}
+main{padding:0 0 80px;min-width:0}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:72px 56px 64px;border-bottom:4px solid var(--brass)}
+.hero h1{font:600 clamp(34px,5vw,54px)/1.1 var(--serif);margin:0 0 16px;max-width:760px}
+.hero p{max-width:620px;color:#B7C2D3;font-size:18px;margin:0}
+.hero .meta{display:flex;gap:32px;margin-top:36px;flex-wrap:wrap}
+.hero .meta div{border-left:2px solid var(--brass);padding-left:14px;font-size:14px;color:#8C9AB0}
+.hero .meta b{display:block;color:#fff;font:600 22px var(--serif)}
+.wrap{max-width:900px;padding:0 56px;margin:0 auto}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:36px 40px;margin-top:32px;box-shadow:0 1px 2px rgba(14,26,43,.04)}
+section h2{font:600 30px/1.2 var(--serif);margin:0 0 6px;color:var(--ink)}
+section .lead{color:var(--muted);margin:0 0 22px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+h3{font:600 18px var(--sans);margin:28px 0 8px}
+p{margin:0 0 14px}
+ul{padding-left:20px;margin:0 0 16px} li{margin-bottom:6px}
+code{font-family:var(--mono);font-size:.88em;background:var(--brass-soft);padding:2px 6px;border-radius:4px}
+.cb{position:relative;margin:14px 0 20px}
+pre{margin:0;background:var(--code-bg);color:var(--code-fg);padding:18px 20px;border-radius:8px;overflow-x:auto;font:400 14px/1.65 var(--mono);border-left:3px solid var(--brass)}
+pre code{background:none;padding:0;font-size:inherit}
+.copy{position:absolute;top:8px;right:8px;background:#22314A;color:#C9D2E0;border:0;border-radius:5px;padding:4px 10px;font:12px var(--sans);cursor:pointer}
+.copy:hover{background:var(--brass);color:#fff}
+.k{color:var(--k)}.s{color:var(--s)}.c{color:var(--c);font-style:italic}.n{color:var(--n)}.f{color:var(--f)}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:12px 0 20px;display:block;overflow-x:auto}
+th{background:var(--navy);color:#fff;text-align:left;padding:10px 14px;font-weight:500}
+td{padding:10px 14px;border-bottom:1px solid var(--line)}
+tr:nth-child(even) td{background:rgba(127,140,160,.07)}
+.note{background:var(--brass-soft);border-left:4px solid var(--brass);padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0}
+.note b{color:var(--brass)}
+footer{text-align:center;color:var(--muted);font-size:14px;margin-top:40px}
+.hidden{display:none}
+.menu{display:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  aside{position:fixed;inset:0 auto 0 0;width:280px;z-index:20;transform:translateX(-100%);transition:transform .25s}
+  aside.open{transform:none}
+  .menu{display:block;position:fixed;top:12px;right:12px;z-index:30;background:var(--navy);color:#fff;border:1px solid var(--brass);border-radius:6px;padding:8px 14px;font:14px var(--sans)}
+  .hero{padding:64px 24px 44px}.wrap{padding:0 16px}section{padding:24px 20px}
+}
+@media print{aside,.menu,.copy{display:none}.layout{display:block}section{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<button class="menu" id="menu" aria-label="Toggle navigation">Contents</button>
+<div class="layout">
+<aside id="side">
+  <div class="brand">Python Notes<small>Complete working reference</small></div>
+  <input id="q" type="search" placeholder="Filter topics…" aria-label="Filter topics">
+  <nav id="nav"></nav>
+  <button class="theme" id="theme">Switch light / dark</button>
+</aside>
+
+<main>
+<header class="hero">
+  <h1>Python, from first script to production habits</h1>
+  <p>Concise notes with working examples covering the language core, data structures, functions, object-oriented design and error handling.</p>
+  <div class="meta"><div><b>12</b>chapters</div><div><b>Python 3.10+</b>target version</div><div><b>Copy-ready</b>every example runs</div></div>
+</header>
+
+<div class="wrap">
+
+<section id="intro"><h2>Introduction</h2>
+<p class="lead">What Python is and how to run it.</p>
+<p>Python is a high-level, interpreted, dynamically typed language known for readable syntax. It is used for automation, web back ends, data analysis, machine learning and scripting.</p>
+<ul><li>Indentation (4 spaces) defines blocks; there are no braces.</li><li>Everything is an object, including functions and classes.</li><li>Run a file with <code>python app.py</code> or experiment in the REPL with <code>python</code>.</li></ul>
+<pre><code># hello.py
+print("Hello, World!")
+name = input("Your name: ")
+print(f"Welcome, {name}")</code></pre></section>
+
+<section id="types"><h2>Variables &amp; Data Types</h2>
+<p class="lead">Names point to objects; types belong to the objects.</p>
+<table><tr><th>Type</th><th>Example</th><th>Mutable</th></tr>
+<tr><td>int</td><td><code>42</code></td><td>No</td></tr>
+<tr><td>float</td><td><code>3.14</code></td><td>No</td></tr>
+<tr><td>bool</td><td><code>True</code></td><td>No</td></tr>
+<tr><td>str</td><td><code>"text"</code></td><td>No</td></tr>
+<tr><td>list</td><td><code>[1, 2]</code></td><td>Yes</td></tr>
+<tr><td>tuple</td><td><code>(1, 2)</code></td><td>No</td></tr>
+<tr><td>set</td><td><code>{1, 2}</code></td><td>Yes</td></tr>
+<tr><td>dict</td><td><code>{"a": 1}</code></td><td>Yes</td></tr>
+<tr><td>NoneType</td><td><code>None</code></td><td>No</td></tr></table>
+<pre><code>age = 30
+price = 19.99
+active = True
+print(type(age), isinstance(price, float))
+x, y = 5, 10          # multiple assignment
+x, y = y, x           # swap
+n = int("12") + float("1.5")   # type conversion</code></pre></section>
+
+<section id="operators"><h2>Operators</h2>
+<p class="lead">Arithmetic, comparison, logical and membership.</p>
+<pre><code>7 // 2     # 3   floor division
+7 % 2      # 1   remainder
+2 ** 10    # 1024 power
+5 == 5.0   # True
+3 &lt; 5 &lt; 9 # True  chained comparison
+True and not False
+"a" in "cat"          # membership
+a is None             # identity
+x = y if y else 0     # conditional expression
+total = 0; total += 5 # augmented assignment</code></pre>
+<div class="note"><b>Tip:</b> use <code>==</code> to compare values and <code>is</code> only for <code>None</code> and singletons.</div></section>
+
+<section id="strings"><h2>Strings</h2>
+<p class="lead">Immutable sequences of Unicode characters.</p>
+<pre><code>s = "  Python Programming  "
+s.strip().lower()         # 'python programming'
+s.split()                 # ['Python', 'Programming']
+"-".join(["a", "b"])      # 'a-b'
+s.replace("Python", "Java")
+s.strip()[0:6]            # slicing -> 'Python'
+s[::-1]                   # reverse
+f"{3.14159:.2f}"          # '3.14'
+f"{1234567:,}"            # '1,234,567'
+"""multi
+line"""</code></pre></section>
+
+<section id="collections"><h2>Collections</h2>
+<p class="lead">Lists, tuples, sets and dictionaries.</p>
+<h3>List — ordered, mutable</h3>
+<pre><code>nums = [3, 1, 2]
+nums.append(4); nums.insert(0, 9); nums.remove(1)
+nums.sort(reverse=True)
+nums[1:3]; nums[-1]; len(nums)</code></pre>
+<h3>Tuple — ordered, immutable</h3>
+<pre><code>point = (10, 20)
+x, y = point</code></pre>
+<h3>Set — unique values</h3>
+<pre><code>a, b = {1, 2, 3}, {3, 4}
+a | b   # union      a &amp; b   # intersection
+a - b   # difference</code></pre>
+<h3>Dictionary — key/value pairs</h3>
+<pre><code>user = {"name": "Asha", "age": 28}
+user["city"] = "Chennai"
+user.get("phone", "n/a")
+for key, value in user.items():
+    print(key, value)
+user.pop("age")</code></pre></section>
+
+<section id="control"><h2>Control Flow</h2>
+<p class="lead">Decisions and loops.</p>
+<pre><code>score = 82
+if score &gt;= 90:
+    grade = "A"
+elif score &gt;= 75:
+    grade = "B"
+else:
+    grade = "C"
+
+for i in range(1, 6, 2):      # 1, 3, 5
+    print(i)
+
+for idx, item in enumerate(["a", "b"], start=1):
+    print(idx, item)
+
+n = 0
+while n &lt; 3:
+    n += 1
+    if n == 2:
+        continue
+else:
+    print("loop finished")
+
+match grade:                   # Python 3.10+
+    case "A": print("Excellent")
+    case _:   print("Keep going")</code></pre></section>
+
+<section id="functions"><h2>Functions</h2>
+<p class="lead">Reusable blocks with flexible arguments.</p>
+<pre><code>def greet(name, greeting="Hello", *args, **kwargs):
+    """Return a greeting string."""
+    return f"{greeting}, {name}!"
+
+greet("Ravi")
+greet(name="Meena", greeting="Hi")
+
+square = lambda x: x * x
+list(map(square, [1, 2, 3]))
+list(filter(lambda x: x % 2, [1, 2, 3]))
+
+def counter():
+    count = 0
+    def inc():
+        nonlocal count
+        count += 1
+        return count
+    return inc           # closure</code></pre>
+<div class="note"><b>Warning:</b> never use a mutable default such as <code>def f(x=[])</code>. Use <code>None</code> and create the list inside.</div></section>
+
+<section id="comprehensions"><h2>Comprehensions &amp; Generators</h2>
+<p class="lead">Compact, readable data transformation.</p>
+<pre><code>squares = [x**2 for x in range(10) if x % 2 == 0]
+lookup  = {w: len(w) for w in ["sun", "moon"]}
+unique  = {c for c in "hello"}
+
+def fib(limit):
+    a, b = 0, 1
+    while a &lt; limit:
+        yield a
+        a, b = b, a + b
+
+list(fib(50))
+total = sum(x for x in range(1_000_000))   # lazy</code></pre></section>
+
+<section id="oop"><h2>Object-Oriented Programming</h2>
+<p class="lead">Classes, inheritance and special methods.</p>
+<pre><code>class Account:
+    bank = "Northwind"                 # class attribute
+
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self._balance = balance
+
+    @property
+    def balance(self):
+        return self._balance
+
+    def deposit(self, amount):
+        if amount &lt;= 0:
+            raise ValueError("Amount must be positive")
+        self._balance += amount
+
+    @classmethod
+    def empty(cls, owner):
+        return cls(owner)
+
+    def __str__(self):
+        return f"{self.owner}: {self._balance}"
+
+class Savings(Account):
+    def __init__(self, owner, balance=0, rate=0.04):
+        super().__init__(owner, balance)
+        self.rate = rate
+
+acc = Savings("Asha", 1000)
+acc.deposit(500)
+print(acc)</code></pre>
+<pre><code>from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: float
+    y: float = 0.0</code></pre></section>
+
+<section id="errors"><h2>Exceptions</h2>
+<p class="lead">Handle failure without crashing.</p>
+<pre><code>try:
+    value = int(input("Number: "))
+    result = 10 / value
+except ValueError:
+    print("Not a number")
+except ZeroDivisionError as e:
+    print("Error:", e)
+else:
+    print("Result", result)
+finally:
+    print("Always runs")
+
+class InsufficientFunds(Exception):
+    pass</code></pre></section>
+
+<section id="files"><h2>Files &amp; Modules</h2>
+<p class="lead">Reading data and organising code.</p>
+<pre><code>with open("data.txt", "w", encoding="utf-8") as f:
+    f.write("line one\n")
+
+with open("data.txt", encoding="utf-8") as f:
+    for line in f:
+        print(line.strip())
+
+import json, csv
+from pathlib import Path
+
+data = json.loads('{"a": 1}')
+Path("out").mkdir(exist_ok=True)
+
+if __name__ == "__main__":
+    main()          # runs only when executed directly</code></pre>
+<p>Install packages with <code>pip install requests</code> and isolate projects with <code>python -m venv .venv</code>.</p></section>
+
+<section id="advanced"><h2>Decorators &amp; Standard Library</h2>
+<p class="lead">Tools that make code concise and professional.</p>
+<pre><code>import time
+from functools import wraps
+
+def timer(fn):
+    @wraps(fn)
+    def wrapper(*a, **kw):
+        start = time.perf_counter()
+        out = fn(*a, **kw)
+        print(f"{fn.__name__}: {time.perf_counter()-start:.4f}s")
+        return out
+    return wrapper
+
+@timer
+def work():
+    return sum(range(10**6))</code></pre>
+<table><tr><th>Module</th><th>Purpose</th></tr>
+<tr><td><code>collections</code></td><td>Counter, defaultdict, deque</td></tr>
+<tr><td><code>itertools</code></td><td>Efficient iteration tools</td></tr>
+<tr><td><code>datetime</code></td><td>Dates and times</td></tr>
+<tr><td><code>re</code></td><td>Regular expressions</td></tr>
+<tr><td><code>logging</code></td><td>Structured application logs</td></tr>
+<tr><td><code>argparse</code></td><td>Command-line interfaces</td></tr></table></section>
+
+<section id="practices"><h2>Best Practices</h2>
+<p class="lead">Habits that keep code maintainable.</p>
+<ul>
+<li>Follow PEP 8: snake_case for functions and variables, PascalCase for classes.</li>
+<li>Write docstrings and add type hints: <code>def add(a: int, b: int) -&gt; int</code>.</li>
+<li>Prefer <code>with</code> blocks for files and connections.</li>
+<li>Catch specific exceptions; never use a bare <code>except:</code>.</li>
+<li>Use virtual environments and pin dependencies in <code>requirements.txt</code>.</li>
+<li>Write tests with <code>pytest</code> and format with <code>black</code> or <code>ruff</code>.</li></ul></section>
+
+<footer>Python Notes — print this page to save it as a PDF.</footer>
+</div>
+</main>
+</div>
+
+<script>
+const secs=[...document.querySelectorAll('section')], nav=document.getElementById('nav');
+secs.forEach(s=>{const a=document.createElement('a');a.href='#'+s.id;a.textContent=s.querySelector('h2').textContent;nav.appendChild(a)});
+const links=[...nav.children];
+// scroll spy
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+// filter
+document.getElementById('q').addEventListener('input',e=>{const v=e.target.value.toLowerCase();secs.forEach((s,i)=>{const hit=s.textContent.toLowerCase().includes(v);s.classList.toggle('hidden',!hit);links[i].classList.toggle('hidden',!hit)})});
+// syntax highlight + copy
+const kw=/\b(def|class|return|if|elif|else|for|while|in|import|from|as|try|except|finally|with|lambda|yield|raise|pass|continue|break|match|case|and|or|not|is|None|True|False|nonlocal|self)\b/g;
+document.querySelectorAll('pre').forEach(pre=>{
+  const code=pre.querySelector('code'), raw=code.textContent, cb=document.createElement('div');cb.className='cb';
+  const html=raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  code.innerHTML=html.replace(/(#.*$)|("""[\s\S]*?"""|f?"[^"\n]*"|'[^'\n]*')|(@\w+)|\b(\d[\d_.]*)\b|(\bdef\s+)(\w+)/gm,(m,c,s,d,n,df,fn)=>c?`<span class="c">${c}</span>`:s?`<span class="s">${s}</span>`:d?`<span class="f">${d}</span>`:n?`<span class="n">${n}</span>`:`<span class="k">def </span><span class="f">${fn}</span>`).replace(/(<span class="[a-z]">[\s\S]*?<\/span>)|\b(class|return|if|elif|else|for|while|in|import|from|as|try|except|finally|with|lambda|yield|raise|pass|continue|break|match|case|and|or|not|is|None|True|False|nonlocal)\b/g,(m,sp,k)=>sp?sp:`<span class="k">${k}</span>`);
+  pre.replaceWith(cb);cb.appendChild(pre);
+  const b=document.createElement('button');b.className='copy';b.textContent='Copy';
+  b.onclick=()=>{navigator.clipboard.writeText(raw).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)}).catch(()=>{})};
+  cb.appendChild(b);
+});
+// theme
+const root=document.documentElement;
+document.getElementById('theme').onclick=()=>{const dark=getComputedStyle(root).getPropertyValue('--bg').trim()==='#0A121E';root.dataset.theme=dark?'light':'dark'};
+// mobile menu
+const side=document.getElementById('side');
+document.getElementById('menu').onclick=()=>side.classList.toggle('open');
+nav.addEventListener('click',()=>side.classList.remove('open'));
+</script>
+</body>
+</html>
